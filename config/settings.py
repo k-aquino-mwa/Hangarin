@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-=la9e1hp28#0tcjf=-b80@^mjsl3rh50%5v$o_g=s7#u+q7-x(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['Karylleaquino.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -115,4 +114,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
