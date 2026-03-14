@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit{% else %}New{% endif %} Note | HANGARIN{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-inner">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-1" style="color: var(--coquette-text)">{% if object %}Edit{% else %}New{% endif %} Note</h2>
+                <p class="text-muted">Write a note for a task and add it to your dashboard.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+
+                            <div class="form-group">
+                                {{ form.task.label_tag }}
+                                {{ form.task }}
+                                {{ form.task.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.content.label_tag }}
+                                {{ form.content }}
+                                {{ form.content.errors }}
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'note-list' %}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

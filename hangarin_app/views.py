@@ -89,3 +89,52 @@ class CategoryDeleteView(DeleteView):
     model = Category
     template_name = 'category_confirm_delete.html'
     success_url = reverse_lazy('category-list')
+
+
+class NoteList(ListView):
+    model = Note
+    context_object_name = 'notes'
+    template_name = 'note_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('task')
+        query = self.request.GET.get('q')
+        created = self.request.GET.get('created')
+        if query:
+            queryset = queryset.filter(content__icontains=query)
+        if created:
+            queryset = queryset.filter(created_at__date=created)
+        return queryset.order_by('-created_at')
+
+
+class NoteCreateView(CreateView):
+    model = Note
+    fields = ['task', 'content']
+    template_name = 'note_form.html'
+    success_url = reverse_lazy('note-list')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['task'].widget.attrs.update({'class': 'form-control'})
+        form.fields['content'].widget.attrs.update({'class': 'form-control', 'rows': 4})
+        return form
+
+
+class NoteUpdateView(UpdateView):
+    model = Note
+    fields = ['task', 'content']
+    template_name = 'note_form.html'
+    success_url = reverse_lazy('note-list')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['task'].widget.attrs.update({'class': 'form-control'})
+        form.fields['content'].widget.attrs.update({'class': 'form-control', 'rows': 4})
+        return form
+
+
+class NoteDeleteView(DeleteView):
+    model = Note
+    template_name = 'note_confirm_delete.html'
+    success_url = reverse_lazy('note-list')
