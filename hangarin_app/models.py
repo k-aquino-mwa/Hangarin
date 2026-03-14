@@ -76,5 +76,9 @@ class SubTask(BaseModel):
         default="Pending"
     )
 
+    @property
+    def parent_task_name(self):
+        return self.parent_task.title if self.parent_task else ""
+
     def __str__(self):
         return self.title

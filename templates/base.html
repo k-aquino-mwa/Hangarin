@@ -183,6 +183,13 @@
 								<p>Categories</p>
 							</a>
 						</li>
+					<li class="nav-item">
+						<a href="{% url 'priority-list' %}">
+							<i class="la la-list-alt"></i>
+							<p>Priorities</p>
+						</a>
+					</li>
+
 						<li class="nav-item">
 							<a href="{% url 'task-list' %}">
 								<i class="la la-bell"></i>
@@ -195,10 +202,10 @@
 								<p>Notes</p>
 							</a>
 						</li>
-						<li class="nav-item active">
-							<a href="typography.html">
-								<i class="la la-font"></i>
-								<p>Sub tasks</p>
+						<li class="nav-item">
+							<a href="{% url 'subtask-list' %}">
+								<i class="la la-tasks"></i>
+								<p>Subtasks</p>
 							</a>
 						</li>
 					</ul>

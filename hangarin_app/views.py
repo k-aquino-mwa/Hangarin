@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from hangarin_app.models import Category, Task, Note, Priority
+from hangarin_app.models import Category, Task, Note, Priority, SubTask
 
 # Create your views here.
 
@@ -90,6 +90,50 @@ class CategoryDeleteView(DeleteView):
     model = Category
     template_name = 'category_confirm_delete.html'
     success_url = reverse_lazy('category-list')
+
+
+class PriorityList(ListView):
+    model = Priority
+    context_object_name = 'priorities'
+    template_name = 'priority_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(name__icontains=query)
+        return queryset.order_by('name')
+
+
+class PriorityCreateView(CreateView):
+    model = Priority
+    fields = ['name']
+    template_name = 'priority_form.html'
+    success_url = reverse_lazy('priority-list')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['name'].widget.attrs.update({'class': 'form-control'})
+        return form
+
+
+class PriorityUpdateView(UpdateView):
+    model = Priority
+    fields = ['name']
+    template_name = 'priority_form.html'
+    success_url = reverse_lazy('priority-list')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['name'].widget.attrs.update({'class': 'form-control'})
+        return form
+
+
+class PriorityDeleteView(DeleteView):
+    model = Priority
+    template_name = 'priority_confirm_delete.html'
+    success_url = reverse_lazy('priority-list')
 
 
 class NoteList(ListView):
@@ -216,3 +260,62 @@ class TaskDeleteView(DeleteView):
     model = Task
     template_name = 'task_confirm_delete.html'
     success_url = reverse_lazy('task-list')
+
+
+class SubTaskList(ListView):
+    model = SubTask
+    context_object_name = 'subtasks'
+    template_name = 'subtask_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('parent_task')
+        query = self.request.GET.get('q')
+        status = self.request.GET.get('status')
+
+        if query:
+            queryset = queryset.filter(title__icontains=query)
+
+        if status:
+            queryset = queryset.filter(status=status)
+
+        return queryset.order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['status_choices'] = SubTask.STATUS_CHOICES
+        return context
+
+
+class SubTaskCreateView(CreateView):
+    model = SubTask
+    fields = ['parent_task', 'title', 'status']
+    template_name = 'subtask_form.html'
+    success_url = reverse_lazy('subtask-list')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['parent_task'].widget.attrs.update({'class': 'form-control'})
+        form.fields['title'].widget.attrs.update({'class': 'form-control'})
+        form.fields['status'].widget.attrs.update({'class': 'form-control'})
+        return form
+
+
+class SubTaskUpdateView(UpdateView):
+    model = SubTask
+    fields = ['parent_task', 'title', 'status']
+    template_name = 'subtask_form.html'
+    success_url = reverse_lazy('subtask-list')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['parent_task'].widget.attrs.update({'class': 'form-control'})
+        form.fields['title'].widget.attrs.update({'class': 'form-control'})
+        form.fields['status'].widget.attrs.update({'class': 'form-control'})
+        return form
+
+
+class SubTaskDeleteView(DeleteView):
+    model = SubTask
+    template_name = 'subtask_confirm_delete.html'
+    success_url = reverse_lazy('subtask-list')

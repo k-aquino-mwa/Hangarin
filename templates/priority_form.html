@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit{% else %}New{% endif %} Priority | HANGARIN{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-inner">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-1" style="color: var(--coquette-text)">{% if object %}Edit{% else %}New{% endif %} Priority</h2>
+                <p class="text-muted">Create or update a priority level.</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_name">Name</label>
+                                {{ form.name }}
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'priority-list' %}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

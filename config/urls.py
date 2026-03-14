@@ -23,6 +23,10 @@ from hangarin_app.views import (
     CategoryCreateView,
     CategoryUpdateView,
     CategoryDeleteView,
+    PriorityList,
+    PriorityCreateView,
+    PriorityUpdateView,
+    PriorityDeleteView,
     TaskList,
     TaskCreateView,
     TaskUpdateView,
@@ -31,6 +35,10 @@ from hangarin_app.views import (
     NoteCreateView,
     NoteUpdateView,
     NoteDeleteView,
+    SubTaskList,
+    SubTaskCreateView,
+    SubTaskUpdateView,
+    SubTaskDeleteView,
 )
 
 urlpatterns = [
@@ -42,6 +50,11 @@ urlpatterns = [
     path('categories/<int:pk>/edit/', CategoryUpdateView.as_view(), name='category-update'),
     path('categories/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category-delete'),
 
+    path('priorities/', PriorityList.as_view(), name='priority-list'),
+    path('priorities/new/', PriorityCreateView.as_view(), name='priority-create'),
+    path('priorities/<int:pk>/edit/', PriorityUpdateView.as_view(), name='priority-update'),
+    path('priorities/<int:pk>/delete/', PriorityDeleteView.as_view(), name='priority-delete'),
+
     path('tasks/', TaskList.as_view(), name='task-list'),
     path('tasks/new/', TaskCreateView.as_view(), name='task-create'),
     path('tasks/<int:pk>/edit/', TaskUpdateView.as_view(), name='task-update'),
@@ -51,4 +64,9 @@ urlpatterns = [
     path('notes/new/', NoteCreateView.as_view(), name='note-create'),
     path('notes/<int:pk>/edit/', NoteUpdateView.as_view(), name='note-update'),
     path('notes/<int:pk>/delete/', NoteDeleteView.as_view(), name='note-delete'),
+
+    path('subtasks/', SubTaskList.as_view(), name='subtask-list'),
+    path('subtasks/new/', SubTaskCreateView.as_view(), name='subtask-create'),
+    path('subtasks/<int:pk>/edit/', SubTaskUpdateView.as_view(), name='subtask-update'),
+    path('subtasks/<int:pk>/delete/', SubTaskDeleteView.as_view(), name='subtask-delete'),
 ]
