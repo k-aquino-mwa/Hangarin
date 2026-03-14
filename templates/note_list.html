@@ -74,7 +74,10 @@
                                     </div>
                                     <div class="note-card-footer d-flex justify-content-end">
                                         <a href="{% url 'note-update' note.pk %}" class="btn btn-outline-primary mr-2">Edit</a>
-                                        <a href="{% url 'note-delete' note.pk %}" class="btn btn-outline-danger">Delete</a>
+                                        <form method="post" action="{% url 'note-delete' note.pk %}" class="confirm-delete" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this note?');">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

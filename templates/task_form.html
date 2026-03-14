@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit{% else %}New{% endif %} Task | HANGARIN{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-inner">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-1" style="color: var(--coquette-text)">{% if object %}Edit{% else %}New{% endif %} Task</h2>
+                <p class="text-muted">Create or update a task with status, priority and category.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+
+                            <div class="form-group">
+                                {{ form.title.label_tag }}
+                                {{ form.title }}
+                                {{ form.title.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.description.label_tag }}
+                                {{ form.description }}
+                                {{ form.description.errors }}
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    {{ form.deadline.label_tag }}
+                                    {{ form.deadline }}
+                                    {{ form.deadline.errors }}
+                                </div>
+                                <div class="form-group col-md-4">
+                                    {{ form.status.label_tag }}
+                                    {{ form.status }}
+                                    {{ form.status.errors }}
+                                </div>
+                                <div class="form-group col-md-4">
+                                    {{ form.priority.label_tag }}
+                                    {{ form.priority }}
+                                    {{ form.priority.errors }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.category.label_tag }}
+                                {{ form.category }}
+                                {{ form.category.errors }}
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'task-list' %}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
