@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Categories | HANGARIN{% endblock %}
+
+{% block extra_css %}
+<style>
+.category-card {
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.category-card .card-body {
+    padding-bottom: 0.75rem;
+}
+
+.category-card-footer {
+    padding: 0.75rem 1rem 1rem;
+    border-top: 1px solid rgba(206, 166, 226, 0.4);
+}
+
+.category-card-footer .btn {
+    font-size: 0.85rem;
+    padding: 0.375rem 0.75rem;
+}
+
+@media (max-width: 767.98px) {
+    .category-card {
+        min-height: initial;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-inner">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-1" style="color: var(--coquette-text)">Categories</h2>
+                <p class="text-muted">Browse and search your category list.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div>
+                                <h4 class="card-title">Category list</h4>
+                                <p class="card-category">Only the name field is shown.</p>
+                            </div>
+                            <a href="{% url 'category-create' %}" class="btn btn-sm btn-primary">New category</a>
+                        </div>
+
+                        <form method="get" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Search categories..." value="{{ request.GET.q }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            {% for category in categories %}
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card coquette category-card">
+                                    <div class="card-body">
+                                        <h5 class="mb-0" style="color: var(--coquette-text);">{{ category.name }}</h5>
+                                    </div>
+                                    <div class="category-card-footer d-flex justify-content-end">
+                                        <a href="{% url 'category-update' category.pk %}" class="btn btn-outline-primary mr-2">Edit</a>
+                                        <a href="{% url 'category-delete' category.pk %}" class="btn btn-outline-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <p class="text-muted">No categories found.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

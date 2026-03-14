@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Home | HANGARIN{% endblock %}
+
+{% block extra_css %}
+<style>
+:root {
+    --coquette-bg: #fdf6ff;
+    --coquette-panel: rgba(255, 255, 255, 0.88);
+    --coquette-border: rgba(200, 170, 220, 0.6);
+    --coquette-text: #3c2a45;
+    --coquette-muted: rgba(60, 42, 69, 0.65);
+}
+
+.main-panel {
+    background: var(--coquette-bg);
+}
+
+.page-inner {
+    padding: 2.5rem 1rem;
+}
+
+.card.coquette {
+    background: var(--coquette-panel);
+    border: 1px solid var(--coquette-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(60, 42, 69, 0.08);
+}
+
+.card.coquette .card-title {
+    color: var(--coquette-text);
+    font-weight: 700;
+}
+
+.card.coquette .card-category {
+    color: var(--coquette-muted);
+    font-size: 0.9rem;
+}
+
+.coquette-stat {
+    border-radius: 14px;
+    padding: 1.25rem 1.25rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.coquette-stat .icon {
+    font-size: 1.8rem;
+    opacity: 0.8;
+}
+
+.coquette-stat .count {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+}
+
+.coquette-stat .label {
+    opacity: 0.78;
+    margin-top: 0.25rem;
+}
+
+.bg-coquette-1 {
+    background: linear-gradient(135deg, #ff92d0 0%, #ffb4ff 100%);
+}
+
+.bg-coquette-2 {
+    background: linear-gradient(135deg, #80f2ff 0%, #a2cff7 100%);
+}
+
+.bg-coquette-3 {
+    background: linear-gradient(135deg, #ffdf7b 0%, #ffc5d0 100%);
+}
+
+.bg-coquette-4 {
+    background: linear-gradient(135deg, #d1b3ff 0%, #b6f1ff 100%);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-inner">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-1" style="color: var(--coquette-text)">Home</h2>
+                <p class="text-muted">A clean, coquette-themed overview of your data.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            {% for stat in stats %}
+            <div class="col-sm-6 col-lg-3">
+                <div class="coquette-stat {{ stat.color }}">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="count">{{ stat.count }}</div>
+                            <div class="label">{{ stat.label }}</div>
+                        </div>
+                        <div class="icon">
+                            <i class="{{ stat.icon }}"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <h4 class="card-title">Categories</h4>
+                        <p class="card-category">Search and browse your category list.</p>
+
+                        <form method="get" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Search categories..." value="{{ request.GET.q }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            {% for category in home %}
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card coquette">
+                                    <div class="card-body py-3">
+                                        <h5 class="mb-0" style="color: var(--coquette-text);">{{ category.name }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <p class="text-muted">No categories found.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <h4 class="card-title">Quick Tips</h4>
+                        <p class="card-category">Use the search box to filter categories quickly.</p>
+                        <ul class="list-unstyled" style="color: var(--coquette-muted);">
+                            <li>• Click a category to view related tasks (if implemented).</li>
+                            <li>• Add new categories from the admin panel.</li>
+                            <li>• Keep names short and descriptive.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

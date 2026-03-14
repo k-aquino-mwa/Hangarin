@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>{% block title %}HANGARIN{% endblock %}</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="{% static 'css/ready.css' %}">
+	<link rel="stylesheet" href="{% static 'css/demo.css' %}">
+	<style>
+	:root {
+		--coquette-bg: #fbf4ff;
+		--coquette-surface: rgba(255, 255, 255, 0.92);
+		--coquette-border: rgba(206, 166, 226, 0.6);
+		--coquette-text: #432e54;
+		--coquette-muted: rgba(67, 46, 84, 0.65);
+		--coquette-card: rgba(255, 255, 255, 0.88);
+	}
+
+	body {
+		background: var(--coquette-bg) !important;
+		color: var(--coquette-text) !important;
+	}
+
+	.main-header,
+	.logo-header,
+	.navbar,
+	.sidebar {
+		background: var(--coquette-surface) !important;
+		border-bottom: 1px solid var(--coquette-border) !important;
+	}
+
+	.main-header {
+		position: fixed !important;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 64px;
+		z-index: 1050;
+	}
+
+	.sidebar {
+		position: fixed !important;
+		top: 64px;
+		left: 0;
+		height: calc(100% - 64px);
+		width: 260px;
+		overflow-y: auto;
+		box-shadow: 4px 0 20px rgba(67, 46, 84, 0.06);
+	}
+
+	.main-panel {
+		margin-left: 260px;
+		margin-top: 64px;
+	}
+
+	.main-header .navbar {
+		min-height: 64px;
+		padding: 0 1rem;
+	}
+
+	.main-header .navbar .container-fluid {
+		height: 64px;
+		align-items: center;
+		padding: 0;
+	}
+
+	.main-header .navbar .nav-search {
+		margin-bottom: 0;
+	}
+
+	.sidebar .nav .nav-item > a {
+		color: var(--coquette-text) !important;
+		font-weight: 500;
+	}
+
+	.sidebar .nav .nav-item.active > a,
+	.sidebar .nav .nav-item > a:hover {
+		background: rgba(206, 166, 226, 0.3) !important;
+		border-radius: 14px;
+	}
+
+	.main-panel {
+		background: transparent !important;
+		padding: 1.5rem 1.5rem 2rem;
+	}
+
+	.card {
+		background: var(--coquette-card) !important;
+		border: 1px solid var(--coquette-border) !important;
+		border-radius: 16px !important;
+		box-shadow: 0 18px 38px rgba(67, 46, 84, 0.08) !important;
+	}
+
+	.btn-primary {
+		background: linear-gradient(135deg, #ff85c1, #b48cff) !important;
+		border-color: transparent !important;
+	}
+
+	.btn-primary:hover {
+		background: linear-gradient(135deg, #ff6ab0, #9d74e8) !important;
+	}
+	</style>
+	{% block extra_css %}{% endblock %}
+</head>
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+			<a href="/" class="logo">
+				HANGARIN
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					
+					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
+						<div class="input-group">
+							<input type="text" placeholder="Search ..." class="form-control">
+							<div class="input-group-append">
+								<span class="input-group-text">
+									<i class="la la-search search-icon"></i>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</nav>
+		</div>
+
+		<div class="sidebar">
+				<div class="scrollbar-inner sidebar-wrapper">
+					<div class="user">
+						<div class="photo">
+							<img src="{% static 'img/profile.jpg' %}">
+						</div>
+						<div class="info">
+							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									Hizrian
+									<span class="user-level">Administrator</span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample" aria-expanded="true" style="">
+								<ul class="nav">
+									<li>
+										<a href="#profile">
+											<span class="link-collapse">My Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="#edit">
+											<span class="link-collapse">Edit Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="#settings">
+											<span class="link-collapse">Settings</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav">
+						<li class="nav-item">
+							<a href="/">
+								<i class="la la-dashboard"></i>
+								<p>Dashboard</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'category-list' %}">
+								<i class="la la-table"></i>
+								<p>Categories</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="forms.html">
+								<i class="la la-keyboard-o"></i>
+								<p>Priorities</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="tables.html">
+								<i class="la la-th"></i>
+								<p>Notes</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="notifications.html">
+								<i class="la la-bell"></i>
+								<p>Tasks</p>
+							</a>
+						</li>
+						<li class="nav-item active">
+							<a href="typography.html">
+								<i class="la la-font"></i>
+								<p>Sub tasks</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="main-panel">
+                {% block content %}
+                {% endblock %}
+            </div>
+		</div>
+	</div>
+</body>
+<script src="{% static 'js/core/jquery.3.2.1.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/core/popper.min.js' %}"></script>
+<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/plugin/chartist/chartist.min.js' %}"></script>
+<script src="{% static 'js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js'%}"></script>
+<script src="{% static 'js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'js/plugin/bootstrap-toggle/bootstrap-toggle.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-mapael/jquery.mapael.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-mapael/maps/world_countries.min.js' %}"></script>
+<script src="{% static 'js/plugin/chart-circle/circles.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+<script src="{% static 'js/ready.min.js' %}"></script>
+</html>

@@ -16,7 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import path
+from hangarin_app.views import (
+    HomePageView,
+    CategoryList,
+    CategoryCreateView,
+    CategoryUpdateView,
+    CategoryDeleteView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HomePageView.as_view(), name='home'),
+    path('categories/', CategoryList.as_view(), name='category-list'),
+    path('categories/new/', CategoryCreateView.as_view(), name='category-create'),
+    path('categories/<int:pk>/edit/', CategoryUpdateView.as_view(), name='category-update'),
+    path('categories/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category-delete'),
 ]

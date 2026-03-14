@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Categories | HANGARIN{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-inner">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-1" style="color: var(--coquette-text)">Categories</h2>
+                <p class="text-muted">Browse and search your category list.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <h4 class="card-title">Category list</h4>
+                        <p class="card-category">Only the name field is shown.</p>
+
+                        <form method="get" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Search categories..." value="{{ request.GET.q }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            {% for category in categories %}
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card coquette">
+                                    <div class="card-body py-3">
+                                        <h5 class="mb-0" style="color: var(--coquette-text);">{{ category.name }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <p class="text-muted">No categories found.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="card coquette">
+                    <div class="card-body">
+                        <h4 class="card-title">Tip</h4>
+                        <p class="card-category">You can add/edit categories from the admin panel ({{ request.get_host }}/admin/).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
