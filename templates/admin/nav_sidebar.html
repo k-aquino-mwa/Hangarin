@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<nav class="sticky" id="nav-sidebar" aria-label="{% translate 'Sidebar' %}">
+  <ul class="nav-sidebar">
+    <li class="nav-sidebar-item">
+      <a href="{% url 'admin:logout' %}">{% translate 'Log out' %}</a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,81 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{% translate "Logged out" %} | {{ block.super }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        background: linear-gradient(162deg, rgba(255,229,234,0.9) 0%, rgba(255,214,214,0.9) 55%, rgba(255,238,244,0.9) 100%),
+                    url("{% static 'img/bgg.png' %}") center/cover no-repeat;
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    /* Hide admin header/sidebar chrome */
+    #header,
+    #user-tools,
+    #nav-sidebar,
+    #breadcrumbs {
+        display: none !important;
+    }
+
+    #content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2rem;
+    }
+
+    .logout-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+        padding: 2.4rem;
+        max-width: 440px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .logout-card h1 {
+        margin-top: 0;
+        font-size: 1.9rem;
+        color: #5d2032;
+    }
+
+    .logout-card p {
+        margin: 1rem 0;
+        color: rgba(93, 32, 50, 0.7);
+    }
+
+    .logout-card a {
+        display: inline-block;
+        padding: 0.85rem 1.2rem;
+        border-radius: 12px;
+        text-decoration: none;
+        background: linear-gradient(135deg, #ff6d8f, #ffb1c4);
+        color: #fff;
+        font-weight: 600;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+    }
+
+    .logout-card a:hover {
+        background: linear-gradient(135deg, #ff4d75, #ff96b3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="logout-card">
+    <h1>{% translate "Logged out" %}</h1>
+    <p>{% translate "You have successfully logged out." %}</p>
+    <p><a href="{% url 'admin:index' %}">{% translate "Log in again" %}</a></p>
+</div>
+{% endblock %}

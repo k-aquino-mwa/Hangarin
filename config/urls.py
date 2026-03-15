@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls import path
+from django.contrib.auth import views as auth_views
 from hangarin_app.views import (
     HomePageView,
     CategoryList,
@@ -43,6 +43,8 @@ from hangarin_app.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('', HomePageView.as_view(), name='home'),
 
     path('categories/', CategoryList.as_view(), name='category-list'),

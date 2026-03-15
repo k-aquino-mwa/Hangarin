@@ -20,7 +20,11 @@
 	}
 
 	body {
-		background: var(--coquette-bg) !important;
+	    background: linear-gradient(162deg, rgba(255,229,234,0.9) 0%, rgba(255,214,214,0.9) 55%, rgba(255,238,244,0.9) 100%),
+                    url("{% static 'img/cat.png' %}") center/cover no-repeat !important;
+        background-attachment: fixed !important;
+        min-height: 100vh;
+        padding: 0;
 		color: var(--coquette-text) !important;
 	}
 
@@ -142,8 +146,8 @@
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
-									<span class="user-level">Administrator</span>
+									{{ user.get_full_name|default:user.username }}
+									<span class="user-level">{% if user.is_superuser %}Administrator{% else %}User{% endif %}</span>
 									<span class="caret"></span>
 								</span>
 							</a>

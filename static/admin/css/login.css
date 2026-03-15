@@ -2,7 +2,7 @@
 
 .login {
     background: linear-gradient(162deg, rgba(255,229,234,0.9) 0%, rgba(255,214,214,0.9) 55%, rgba(255,238,244,0.9) 100%),
-                url("../img/bgg.png") center/cover no-repeat;
+                url("../../img/bgg.png") center/cover no-repeat;
 }
 
 .login #header {
@@ -46,16 +46,3 @@
 
 .login .form-row #id_username, .login .form-row #id_password {
     padding: 8px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.login .submit-row {
-    padding: 1em 0 0 0;
-    margin: 0;
-    text-align: center;
-}
-
-.login .password-reset-link {
-    text-align: center;
-}

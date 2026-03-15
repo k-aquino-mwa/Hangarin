@@ -1,0 +1,156 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{% if form.errors %}{% translate "Error:" %} {% endif %}{{ block.super }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    /* Use a photo as the page background (bgg.png) with a soft pink overlay */
+    body.login {
+        background: linear-gradient(162deg, rgba(255,229,234,0.9) 0%, rgba(255,214,214,0.9) 55%, rgba(255,238,244,0.9) 100%),
+                    url("{% static 'img/cat.png' %}") center/cover no-repeat !important;
+        background-attachment: fixed !important;
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    /* Center the login card and hide admin chrome */
+    #container, #header, #user-tools, #nav-sidebar, #content-main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    #header, #user-tools, #nav-sidebar {
+        display: none !important;
+    }
+
+    #content {
+        width: 100%;
+        max-width: 520px;
+        padding: 0;
+    }
+
+    #content-main {
+        min-height: 100vh;
+        padding: 2rem;
+    }
+
+    /* Use a photo as the background for the login card */
+    .admin-login-card {
+        background: rgba(255, 255, 255, 0.94);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+        padding: 2.4rem;
+        max-width: 420px;
+        width: 100%;
+    }
+
+    .admin-login-card h1 {
+        margin-top: 0;
+        font-size: 1.9rem;
+        letter-spacing: -0.02em;
+        color: #5d2032;
+    }
+
+    .admin-login-card p {
+        margin-top: 0.5rem;
+        color: rgba(93, 32, 50, 0.7);
+    }
+
+    .admin-login-card .submit-row input[type="submit"] {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
+        border-radius: 14px;
+        border: none;
+        background: linear-gradient(135deg, #ff6d8f, #ffb1c4);
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+    }
+
+    .admin-login-card .submit-row input[type="submit"]:hover {
+        background: linear-gradient(135deg, #ff4d75, #ff96b3);
+    }
+
+    .admin-login-card .form-row label {
+        font-weight: 600;
+        color: rgba(66, 27, 38, 0.85);
+    }
+
+    .admin-login-card .form-row input {
+        border-radius: 12px;
+        border: 1px solid rgba(197, 164, 180, 0.8);
+        padding: 0.72rem 0.85rem;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    .admin-login-card .errornote {
+        background: rgba(255, 87, 108, 0.12);
+        border-left: 4px solid rgba(255, 87, 108, 0.9);
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        color: #7d2434;
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 660px) {
+        body.login {
+            padding: 1.2rem;
+        }
+
+        .admin-login-card {
+            padding: 1.8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-login-card">
+    <h1>{% translate "Sign in" %}</h1>
+    <p>{% translate "Enter your credentials to access the admin site." %}</p>
+
+    {% if form.errors and not form.non_field_errors %}
+    <p class="errornote">{% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}</p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <p class="errornote">{{ error }}</p>
+    {% endfor %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <p class="errornote">{% blocktranslate trimmed %}
+        You are authenticated as {{ username }}, but are not authorized to
+        access this page. Would you like to login to a different account?
+    {% endblocktranslate %}</p>
+    {% endif %}
+
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+        <div class="form-row">{{ form.username.errors }}{{ form.username.label_tag }} {{ form.username }}</div>
+        <div class="form-row">{{ form.password.errors }}{{ form.password.label_tag }} {{ form.password }}<input type="hidden" name="next" value="{{ next }}"></div>
+
+        {% url 'admin_password_reset' as password_reset_url %}
+        {% if password_reset_url %}
+        <div class="password-reset-link">
+            <a href="{{ password_reset_url }}">{% translate 'Forgotten your login credentials?' %}</a>
+        </div>
+        {% endif %}
+
+        <div class="submit-row">
+            <input type="submit" value="{% translate 'Log in' %}">
+        </div>
+    </form>
+</div>
+{% endblock %}
