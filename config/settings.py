@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +26,7 @@ SECRET_KEY = 'django-insecure-=la9e1hp28#0tcjf=-b80@^mjsl3rh50%5v$o_g=s7#u+q7-x(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['Karylleaquino.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['Karylleaquino.pythonanywhere.com', '127.0.0.1', 'localhost', 'testserver']
 
 # Application definition
 
@@ -39,6 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hangarin_app',
+    'widget_tweaks',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+]
+
+SITE_ID = 2
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 MIDDLEWARE = [
@@ -47,8 +60,27 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/accounts/login/' # where @login_required will send users
+LOGIN_REDIRECT_URL = '/' # where to go after successful login
+LOGOUT_REDIRECT_URL = '/accounts/login/' # after logout, go back to login
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/' # where to redirect after logout
+ACCOUNT_LOGOUT_ON_GET = True # logout immediately on GET
+
+ACCOUNT_LOGIN_METHODS = {"username", "email"} # allow login with username OR email
+
+ACCOUNT_SIGNUP_FIELDS = [
+    "username*",
+    "email*",
+    "password1*",
+    "password2*",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -120,6 +152,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_DIRS = [
+STATICFILES_DIRS = (
     BASE_DIR / 'static',
-]
+)
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
