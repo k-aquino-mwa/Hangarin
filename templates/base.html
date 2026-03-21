@@ -171,6 +171,11 @@
 											<span class="link-collapse">Settings</span>
 										</a>
 									</li>
+									<li>
+										<a href="{% url 'account_logout' %}">
+											<span class="link-collapse">Logout</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -213,6 +218,14 @@
 								<p>Subtasks</p>
 							</a>
 						</li>
+						{% if user.is_superuser %}
+						<li class="nav-item">
+							<a href="/admin/">
+								<i class="la la-cog"></i>
+								<p>Admin</p>
+							</a>
+						</li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>

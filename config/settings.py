@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,12 +48,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 ]
 
-SITE_ID = 2
+if "pythonanywhere" in socket.gethostname():
+            SITE_ID = 3 # production site (psusphere.pythonanywhere.com)
+else:
+            SITE_ID = 4 # local site (127.0.0.1:8000)
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-]
+]   
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,34 +69,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-LOGIN_URL = '/accounts/login/' # where @login_required will send users
-LOGIN_REDIRECT_URL = '/' # where to go after successful login
-LOGOUT_REDIRECT_URL = '/accounts/login/' # after logout, go back to login
-
-ACCOUNT_LOGOUT_REDIRECT_URL = '/' # where to redirect after logout
-ACCOUNT_LOGOUT_ON_GET = True # logout immediately on GET
-
-ACCOUNT_LOGIN_METHODS = {"username", "email"} # allow login with username OR email
-
-ACCOUNT_SIGNUP_FIELDS = [
-    "username*",
-    "email*",
-    "password1*",
-    "password2*",
-]
-
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, 'Templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'hangarin_app.context_processors.request_processor',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -157,3 +144,23 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/admin/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/admin/"
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/' # where to redirect after logout
+ACCOUNT_LOGOUT_ON_GET = True # logout immediately on GET
+
+ACCOUNT_LOGIN_METHODS = {"username", "email"} # allow login with username OR email
+
+ACCOUNT_SIGNUP_FIELDS = [
+    "username*",
+    "email*",
+    "password1*",
+    "password2*",
+]

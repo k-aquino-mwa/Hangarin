@@ -96,8 +96,13 @@
                         <!-- Social Login -->
                         <div style="text-align: center; margin-bottom: 1rem;">
                             <p style="color: var(--coquette-muted); font-size: 0.875rem; margin-bottom: 1rem;">Or use a third-party</p>
-                            {% providers_media_js %}
-                            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                            {% if request %}
+                                {% providers_media_js %}
+                                {% get_providers as providers %}
+                                {% for provider in providers %}
+                                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>

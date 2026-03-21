@@ -3,7 +3,14 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from hangarin_app.models import Category, Task, Note, Priority, SubTask
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
+@login_required
+def after_login_redirect(request):
+    if request.user.is_superuser:
+        return redirect('/admin/')
+    return redirect('/')
 # Create your views here.
 
 class HomePageView(ListView):

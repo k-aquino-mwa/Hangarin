@@ -15,8 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
 from hangarin_app.views import (
     HomePageView,
     CategoryList,
@@ -39,12 +40,15 @@ from hangarin_app.views import (
     SubTaskCreateView,
     SubTaskUpdateView,
     SubTaskDeleteView,
+    after_login_redirect,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('accounts/', include('allauth.urls')),
+    path('login/', lambda request: redirect('/admin/login/')),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('redirect-after-login/', after_login_redirect, name='redirect-after-login'),
     path('', HomePageView.as_view(), name='home'),
 
     path('categories/', CategoryList.as_view(), name='category-list'),
